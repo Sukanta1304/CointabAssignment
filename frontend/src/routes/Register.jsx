@@ -1,7 +1,9 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import Style from './Login.module.css';
 
 function Register() {
+    const url= import.meta.env.VITE_APP_BACKEND_URL;
     const [data, setData] = useState({
         email:'',
         password:''
@@ -17,7 +19,13 @@ function Register() {
     }
 
     const handleSubmit=()=>{
-        console.log(data);
+        axios.post(`${url}/user/register`,data)
+        .then((res)=>{
+            alert(`Registration Successfull`)
+        })
+        .catch((err)=>{
+            alert("Something went wrong , try again")
+        })
     }
 
 

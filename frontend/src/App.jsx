@@ -5,7 +5,7 @@ import Register from "./routes/Register";
 import Login from "./routes/Login";
 
 function App() {
-  const url= import.meta.env.VITE_APP_BACKEND_URL;
+  
   return(
     <div>
       <Navbar/>

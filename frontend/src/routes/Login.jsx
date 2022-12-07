@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 function Login() {
 
+    const url= import.meta.env.VITE_APP_BACKEND_URL;
     const {isAuth,setIsAuth,user,setUser}= useContext(AppContext);
     const navigate= useNavigate();
     
@@ -25,7 +26,7 @@ function Login() {
     }
 
     const handleSubmit=()=>{
-        axios.post(`https://reqres.in/api/login`,data)
+        axios.post(`${url}/user/login`,data)
         .then((res)=>{
             console.log(res.data.token);
             if(res.data.token){
