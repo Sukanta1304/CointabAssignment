@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import Style from './Login.module.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Register() {
     const url= import.meta.env.VITE_APP_BACKEND_URL;
@@ -19,13 +21,19 @@ function Register() {
     }
 
     const handleSubmit=()=>{
-        axios.post(`${url}/user/register`,data)
-        .then((res)=>{
-            alert(`Registration Successfull`)
-        })
-        .catch((err)=>{
-            alert("Something went wrong , try again")
-        })
+        if(data.email=="" || data.password==""){
+            toast.error(`Please Provide all Fields Correctly`)
+        }else{
+            axios.post(`${url}/user/register`,data)
+            .then((res)=>{
+                console.log(res);
+                toast.success(`Registration Successfull`)
+            })
+            .catch((err)=>{
+                console.log(err);
+                toast.err(`Something went wrong , try again`)
+            })
+        }   
     }
 
 
@@ -47,6 +55,7 @@ function Register() {
             <br />
             <button onClick={handleSubmit}>Submit</button>
         </div>
+        <ToastContainer />
     </div>
   )
 }

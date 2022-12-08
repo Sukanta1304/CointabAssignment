@@ -4,6 +4,8 @@ import axios from 'axios';
 import { useContext } from 'react';
 import { AppContext } from '../context/AppContext';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Login() {
 
@@ -29,16 +31,23 @@ function Login() {
         axios.post(`${url}/user/login`,data)
         .then((res)=>{
             console.log(res.data.token);
-            if(res.data.token){
+                toast.success("Login Successfull")
                 setIsAuth(true);
                 setUser(data.email);
-                navigate("/")
-            }else{
-                alert("invalid creds")
-            }
+                setTimeout(()=>{
+                    navigate("/")
+                },1000)
         })
         .catch((err)=>{
-            console.log(err)
+            console.log(err);
+            const totalattempt= 5;
+            const attempt= err.response.data.attemp;
+            const remainig= totalattempt-attempt;
+            const msg= err.response.data.messg;
+            console.log(totalattempt,attempt,remainig,msg);
+            const alert= err.response.data.attemp?`${msg} .You have ${remainig} attempt left `: err.response.data
+            console.log(alert)
+            toast.error(alert)
         })
     }
 
@@ -61,6 +70,7 @@ function Login() {
             <br />
             <button onClick={handleSubmit}>Submit</button>
         </div>
+        <ToastContainer />
     </div>
   )
 }
