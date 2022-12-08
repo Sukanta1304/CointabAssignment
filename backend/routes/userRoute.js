@@ -55,8 +55,21 @@ userRoute.post("/login",(req,res)=>{
             }else{
                 let currentDate= new Date();
                 if(result[0].password == password && result[0].blockFor<= currentDate){
+                    const attempt=0;
+                    conn.query(`UPDATE userTable SET attempt = ? WHERE email= ?`,[attempt,email],(err,reslt)=>{
+                        if(err){
+                            console.log(err)
+                        }else{
+                            console.log(reslt)
+                        }
+                    })
                     res.status(200).send("Login successfull")
-                }else{
+                }
+                if(result[0].password == password && result[0].blockFor> currentDate){
+                    res.status(401).send("Your account is blocked for 24 hours")
+                }
+
+                else{
                     if(result[0].password !== password){
                         let attempt= result[0].attempt;
                         if(attempt>5){
@@ -80,7 +93,7 @@ userRoute.post("/login",(req,res)=>{
                                 console.log(reslt)
                             }
                         })
-                        res.status(400).send("password didn't match");
+                        res.status(400).send({messg:"password didn't match" , attemp:attempt});
 
                     }
                     
