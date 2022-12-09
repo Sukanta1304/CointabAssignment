@@ -32,3 +32,12 @@ cd frontend
 npm start
 
 ```
+
+### Add .env file
+```
+HOST = if database run in your machine locally - localhost . or YOUR_ONLINE_DATABASE_HOSTNAME.
+USER = YOUR_USER_NAME / root
+PASSWORD = YOUR_PASSWORD/ ''
+DATABASE = YOUR_DATABASE_NAME
+
+```
